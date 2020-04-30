@@ -39,9 +39,29 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(object, name, age) {
+  this.name = object.name = name;
+  this.age = object.age = age;
+  this.stomach = object.stomach = [];
 }
+
+Person.prototype.eat = function PersonEat(someFood){
+
+    if (this.stomach.length != 10){
+    this.stomach.push(someFood);
+    }else{
+      `${this.name} is full. ${this.name} needs to poop first, if you want ${this.name} to eat more.`
+    }
+}
+
+Person.prototype.poop = function PersonPoop(){
+   this.stomach.splice(0, this.stomach.length);
+}
+
+Person.prototype.toString = function PersonToString(){
+ console.log( `${this.name},${this.age}`);
+}
+
 
 /*
   TASK 2
@@ -57,10 +77,20 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
 
-}
-
+function Car(object, model, milesPerGallon) {
+  this.model = object.model = model; 
+  this.milesPerGallon = object.milesPerGallon = milesPerGallon;
+  this.tank = object.tank = 0;
+  this.odometer = object.odometer = 0;
+  }
+  
+  
+  Car.prototype.fill = function CarFill(gallons){
+    this.tank = gallons + this.tank;
+  }
+  
+  
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
@@ -68,18 +98,33 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
-
+function Baby(object, name, age, favoriteToy) {
+  Person.call(this, object, name, age);
+  this.favoriteToy = object.favoriteToy = favoriteToy;
 }
+
+Baby.prototype.play = function(){
+  return `Play with ${this.favoriteToy}`
+}
+
 
 /* 
   TASK 4
 
+
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+
+
+  
+  The four rules presented for determining what 'this' in JavaScript points to boil down to one simple question: What is the calling object?
+
+
+1. Is the function called by new?
+2. Is the function called by call(), apply(), or bind()?
+3. Is the function called as a method, ie: obj.func()?
+4. Is the function called in the global scope?
+    If strict mode is enabled, return undefined.
+    Otherwise, return the global object, ie: window.
 */
 
 
