@@ -39,10 +39,10 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person(object, name, age) {
-  this.name = object.name = name;
-  this.age = object.age = age;
-  this.stomach = object.stomach = [];
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
 
 Person.prototype.eat = function PersonEat(someFood){
@@ -59,7 +59,7 @@ Person.prototype.poop = function PersonPoop(){
 }
 
 Person.prototype.toString = function PersonToString(){
- console.log( `${this.name},${this.age}`);
+ return `${this.name},${this.age}`;
 }
 
 
@@ -78,11 +78,11 @@ Person.prototype.toString = function PersonToString(){
 */
 
 
-function Car(object, model, milesPerGallon) {
-  this.model = object.model = model; 
-  this.milesPerGallon = object.milesPerGallon = milesPerGallon;
-  this.tank = object.tank = 0;
-  this.odometer = object.odometer = 0;
+function Car(model, milesPerGallon) {
+  this.model = model ; 
+  this.milesPerGallon = milesPerGallon = milesPerGallon;
+  this.tank = tank = 0;
+  this.odometer = odometer = 0;
   }
   
   
@@ -98,14 +98,23 @@ function Car(object, model, milesPerGallon) {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby(object, name, age, favoriteToy) {
-  Person.call(this, object, name, age);
-  this.favoriteToy = object.favoriteToy = favoriteToy;
+
+
+
+
+
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
 }
+
+  Baby.prototype = Object.create(Person.prototype) // Need this access methods and other parts of the class
 
 Baby.prototype.play = function(){
   return `Play with ${this.favoriteToy}`
 }
+
+
 
 
 /* 
