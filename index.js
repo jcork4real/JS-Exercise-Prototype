@@ -113,18 +113,84 @@ Baby.prototype.play = function(){
 
 
   In your own words explain the four principles for the "this" keyword below:
-
-
   
   The four rules presented for determining what 'this' in JavaScript points to boil down to one simple question: What is the calling object?
 
 
 1. Is the function called by new?
-2. Is the function called by call(), apply(), or bind()?
+2. Is the function called by .call(), .apply(), or .bind()?
 3. Is the function called as a method, ie: obj.func()?
 4. Is the function called in the global scope?
     If strict mode is enabled, return undefined.
     Otherwise, return the global object, ie: window.
+
+
+
+    By Example:
+
+
+    1. Global Binding: 
+          Is the function called in the global scope?
+          If strict mode is enabled, return undefined.
+          Otherwise, return the global object, ie: window/console.log() object
+
+          Example: 
+              function sayName(name){
+                 console.log(this)
+                    return name;
+              } 
+
+                sayName("jcork4real");
+
+    2.  Implicit Binding:
+           Is the function called as a method, ie: obj.func()?
+
+           Whenever a function is called by a preceding dot, the object left of the dot gets 'this'
+
+           Example:
+
+                    const myObj = {
+                      greeting: 'Hello',
+                      sayHello: function(name){
+                        console.log(`${this.greeting} my name is ${name});
+                        console.log(this)
+                      }
+                    };
+                        myObj.SayHello('Ryan')
+
+
+    3.    New Binding: 
+                Is the function called by new?
+            
+              Example:
+                        function CordialPerosn(greeter){
+                          this.greeting = 'Hello';
+                          this.greeting = greeter; 
+                          this.speak = function(){
+                            console.log(this.greeting + this.greeter);
+                          };
+                        }
+
+                        const jerry = new CordialPerson('Newman');
+                        const newman = new CordialPerson('Jerry');
+
+                    Whenever a constructor function is used, this referes to the specific instance of the object that is
+                    created and is returned by the constructor function.
+
+    4.   Explicit Binding: 
+              Is the function called by .call(), .apply(), or .bind()?
+
+              const jerry = new CordialPerson('Newman');
+              const newman = new CordialPerson('Jerry');
+
+              jerry.speak.call(newman);
+              newman.speak.apply(jerry);
+
+              newman.speak();
+              jerry.speak();
+
+
+          Wehnever JavaScripts call or apply method is used, this is explicitly defined.
 */
 
 
