@@ -39,9 +39,29 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
+
+Person.prototype.eat = function PersonEat(someFood){
+
+    if (this.stomach.length != 10){
+    this.stomach.push(someFood);
+    }else{
+      `${this.name} is full. ${this.name} needs to poop first, if you want ${this.name} to eat more.`
+    }
+}
+
+Person.prototype.poop = function PersonPoop(){
+   this.stomach.splice(0, this.stomach.length);
+}
+
+Person.prototype.toString = function PersonToString(){
+ return `${this.name},${this.age}`;
+}
+
 
 /*
   TASK 2
@@ -57,10 +77,20 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
 
-}
-
+function Car(model, milesPerGallon) {
+  this.model = model ; 
+  this.milesPerGallon = milesPerGallon = milesPerGallon;
+  this.tank = tank = 0;
+  this.odometer = odometer = 0;
+  }
+  
+  
+  Car.prototype.fill = function CarFill(gallons){
+    this.tank = gallons + this.tank;
+  }
+  
+  
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
@@ -68,18 +98,108 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
 
+
+
+
+
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
 }
+
+  Baby.prototype = Object.create(Person.prototype) // Need this access methods and other parts of the class
+
+Baby.prototype.play = function(){
+  return `Play with ${this.favoriteToy}`
+}
+
+
+
 
 /* 
   TASK 4
 
+
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  
+  The four rules presented for determining what 'this' in JavaScript points to boil down to one simple question: What is the calling object?
+
+
+1. Is the function called by new?
+2. Is the function called by .call(), .apply(), or .bind()?
+3. Is the function called as a method, ie: obj.func()?
+4. Is the function called in the global scope?
+    If strict mode is enabled, return undefined.
+    Otherwise, return the global object, ie: window.
+
+
+
+    By Example:
+
+
+    1. Global Binding: 
+          Is the function called in the global scope?
+          If strict mode is enabled, return undefined.
+          Otherwise, return the global object, ie: window/console.log() object
+
+          Example: 
+              function sayName(name){
+                 console.log(this)
+                    return name;
+              } 
+
+                sayName("jcork4real");
+
+    2.  Implicit Binding:
+           Is the function called as a method, ie: obj.func()?
+
+           Whenever a function is called by a preceding dot, the object left of the dot gets 'this'
+
+           Example:
+
+                    const myObj = {
+                      greeting: 'Hello',
+                      sayHello: function(name){
+                        console.log(`${this.greeting} my name is ${name});
+                        console.log(this)
+                      }
+                    };
+                        myObj.SayHello('Ryan')
+
+
+    3.    New Binding: 
+                Is the function called by new?
+            
+              Example:
+                        function CordialPerosn(greeter){
+                          this.greeting = 'Hello';
+                          this.greeting = greeter; 
+                          this.speak = function(){
+                            console.log(this.greeting + this.greeter);
+                          };
+                        }
+
+                        const jerry = new CordialPerson('Newman');
+                        const newman = new CordialPerson('Jerry');
+
+                    Whenever a constructor function is used, this referes to the specific instance of the object that is
+                    created and is returned by the constructor function.
+
+    4.   Explicit Binding: 
+              Is the function called by .call(), .apply(), or .bind()?
+
+              const jerry = new CordialPerson('Newman');
+              const newman = new CordialPerson('Jerry');
+
+              jerry.speak.call(newman);
+              newman.speak.apply(jerry);
+
+              newman.speak();
+              jerry.speak();
+
+
+          Wehnever JavaScripts call or apply method is used, this is explicitly defined.
 */
 
 
